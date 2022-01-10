@@ -156,7 +156,7 @@ const deleteanswer = async (req, res) => {
             return res.status(404).send({ status: false, message: "The Answer Doesn't Exist Or Already Been Deleted" })
         }
         let user = found.answeredBy
-        if (token == !user) {
+        if (!(token == user)) {
             return res.status(401).send({ status: false, message: "You Are Not Authorized To Perform This Task" })
         }
         let deleteanswer = await answerModel.findOneAndUpdate({ _id: ID, isDeleted: false }, { isDeleted: true }, { new: true })
