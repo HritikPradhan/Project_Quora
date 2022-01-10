@@ -92,14 +92,15 @@ const getquestion = async (req, res) => {
                 return res.status(400).send({ status: false, message: "You Can Only Use 1 For Ascending And -1 For Descending Sorting" })
             }
         }
-        let check = await questionModel.find(updatedfilter)
+        let check = await questionModel.find(updatedfilter).lean().sort({createdAt:sort})
         if (check.length > 0) {
             for (let i = 0; i < check.length; i++) {
+
                 let answer = await answerModel.find({ questionId: check[i]._id, isDeleted: false })
                 check[i]["answers"] = answer
                 console.log(answer)
             }
-            check = await questionModel.find(updatedfilter).sort({ createdAt: sort })
+            //check = await questionModel.find(updatedfilter).lean().sort({ createdAt: sort })
             return res.status(200).send({ status: true, Data: check })
         }
         else {

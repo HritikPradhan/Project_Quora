@@ -43,9 +43,9 @@ const registerUser = async (req, res) => {
             return res.status(403).send({ status: false, message: "This email Id already in Used" });
         }
         if (phone) {
-            if (!isValid(phone)) {
-                return res.status(400).send({ status: false, message: "Please provide phone number" });
-            }
+            // if (!isValid(phone)) {
+            //     return res.status(400).send({ status: false, message: "Please provide phone number" });
+            // }
             if (!/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(phone)) {
                 return res.status(400).send({ status: false, message: `Phone number should be a  valid indian number` });
             }
@@ -78,12 +78,12 @@ const registerUser = async (req, res) => {
             const userData = await userModel.create(userregister);
             return res.status(201).send({ status: true, message: 'Success', data: userData });
         }
-        const alreadyUsedPhone = await userModel.findOne({ phone })
-        if (alreadyUsedPhone == null) {
-            let registeruser = { fname, lname, email, password: hash, creditScore }
-            const cretaeuserData = await userModel.create(registeruser);
-            return res.status(201).send({ status: true, message: 'Success', data: cretaeuserData });
-        }
+        // const alreadyUsedPhone = await userModel.findOne({ phone })
+        // if (alreadyUsedPhone == null) {
+        //     let registeruser = { fname, lname, email, password: hash, creditScore }
+        //     const cretaeuserData = await userModel.create(registeruser);
+        //     return res.status(201).send({ status: true, message: 'Success', data: cretaeuserData });
+        // }
         let registerUser = { fname, lname, email, password: hash, creditScore }
         const CretaeuserData = await userModel.create(registerUser);
         return res.status(201).send({ status: true, message: 'Success', data: CretaeuserData });
