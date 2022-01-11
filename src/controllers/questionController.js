@@ -98,9 +98,7 @@ const getquestion = async (req, res) => {
 
                 let answer = await answerModel.find({ questionId: check[i]._id, isDeleted: false })
                 check[i]["answers"] = answer
-                console.log(answer)
             }
-            //check = await questionModel.find(updatedfilter).lean().sort({ createdAt: sort })
             return res.status(200).send({ status: true, Data: check })
         }
         else {
@@ -189,7 +187,7 @@ const updatequestionbyid = async (req, res) => {
         if (!(token == user)) {
             return res.status(401).send({ status: false, message: "You Are Not Authorised To Perform This Action" })
         }
-        let update = await questionModel.findOne({ _id: Id, isDeleted: false }, obj, { new: true })
+        let update = await questionModel.findOneAndUpdate({ _id: Id, isDeleted: false }, obj, { new: true })
         return res.status(200).send({ status: true, messege: "Data Updated Successfully", UpdatedData: update })
 
     } catch (error) {
